@@ -62,19 +62,12 @@ const SortUserByPostCount = (users) => {
 // this function is used get data in a post
 const getPostDetail = async () => {
   try {
-    const post = await fetch(`${base_api}/posts/1`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    });
-    const post_data = await post.json();
+    const [post, comments] = await Promise.all([
+      getData(`${base_api}/posts/1`),
+      getData(`${base_api}/comments?postId=1`),
+    ]);
 
-    const comments = await fetch(`${base_api}/comments?postId=1`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    });
-    const comments_data = await comments.json();
-
-    console.log({ ...post_data, comments: comments_data });
+    console.log({ ...post, comments: comments });
   } catch (error) {
     console.log(error);
   }
@@ -83,24 +76,24 @@ const getPostDetail = async () => {
 const Solution = async () => {
   try {
     // get data from https://jsonplaceholder.typicode.com
-    const [users, posts, comments] = await Promise.all([
-      getData(`${base_api}/users`),
-      getData(`${base_api}/posts`),
-      getData(`${base_api}/comments`),
-    ]);
-    // ex3
-    const new_data = groupData(users, posts, comments);
-    console.log(new_data);
+    // const [users, posts, comments] = await Promise.all([
+    //   getData(`${base_api}/users`),
+    //   getData(`${base_api}/posts`),
+    //   getData(`${base_api}/comments`),
+    // ]);
+    // // ex3
+    // const new_data = groupData(users, posts, comments);
+    // console.log(new_data);
     // ex 4, 5
     // filterUser(new_data);
     // ex 6
-    mostUser(new_data);
+    // mostUser(new_data);
 
     // ex 7
     // SortUserByPostCount(new_data);
 
     // ex 8
-    // getPostDetail();
+    getPostDetail();
   } catch (error) {
     console.log(error);
   }
