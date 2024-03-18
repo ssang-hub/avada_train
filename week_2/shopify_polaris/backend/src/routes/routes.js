@@ -9,10 +9,9 @@ const router = new Router({
 // Routes will go here
 router.get("/todos", todoHandlers.getTodos);
 router.get("/todos/:id", todoHandlers.getTodoById);
-router.post("/todos", todoHandlers.save);
+router.post("/todos", middleWare.createTodoMiddleware,todoHandlers.save);
 router.put(
   "/todos",
-  middleWare.updateStatusMiddleware,
   todoHandlers.updateTodo
 );
 router.delete("/todos/:id", todoHandlers.deleteTodoById);

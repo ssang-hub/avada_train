@@ -1,6 +1,6 @@
-import {Frame, Modal, TextField} from "@shopify/polaris";
-import {useCallback, useState} from "react";
-import {FetchData} from "../../api/fetchData";
+import { Frame, Modal, TextField } from "@shopify/polaris";
+import { useCallback, useState } from "react";
+import { FetchData } from "../../api/fetchData";
 
 /**
  * This is component handle create todo
@@ -15,7 +15,11 @@ function CreateTodoModal(props) {
 
   const handleCreateTodo = async () => {
     try {
-      const { data } = await FetchData({method: 'POST', payload:{title:value}, url:"todos"});
+      const { data } = await FetchData({
+        method: "POST",
+        payload: { title: value },
+        url: "todos",
+      });
       props.setTodoes((prevState) => [...prevState, data]);
       setValue("");
       props.handleActiveModal();

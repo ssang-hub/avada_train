@@ -1,12 +1,12 @@
-import {useCallback, useState} from "react";
-import {Button, Page, Text} from "@shopify/polaris";
+import { useCallback, useState } from "react";
+import { Button, Page, Text } from "@shopify/polaris";
 import TodoList from "../Todo/TodoList";
 import CreateTodoModal from "../Modal/Modal";
 import useFetchAPI from "../../hooks/useFetchAPI";
 
 function Home() {
   const [modalActive, setModalActive] = useState(false);
-  const {data, setData, isLoading} = useFetchAPI(`todos`)
+  const { data, setData, isLoading } = useFetchAPI(`todos`);
   const handleActiveModal = useCallback(
     () => setModalActive(!modalActive),
     [modalActive]
@@ -29,7 +29,7 @@ function Home() {
           handleActiveModal={handleActiveModal}
         />
 
-        <TodoList todos={data} setTodos={setData}/>
+        <TodoList todos={data} setTodos={setData} />
       </Page>
     </>
   );

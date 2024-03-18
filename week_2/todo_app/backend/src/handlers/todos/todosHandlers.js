@@ -31,7 +31,7 @@ async function getTodos(ctx) {
 /**
  *
  * @param ctx
- * @returns {Promise<{data: {author: string, name: string, id: number}}|{success: boolean, error: *}|{message: string, status: string}>}
+ * @returns {Promise<{data: @returns {id: number, title: string, is_complete: boolean, createdAt: string}}|{success: boolean, error: *}|{message: string, status: string}>}
  */
 async function getTodo(ctx) {
   try {
@@ -59,7 +59,8 @@ async function getTodo(ctx) {
 /**
  *
  * @param ctx
- * @returns {Promise<{success: boolean, error: *}|{success: boolean}>}
+ * @returns {Promise<{data: @returns {id: number, title: string, is_complete: boolean, createdAt: string}}|{success: boolean, error: *}|{message: string, status: string}>}
+ *
  */
 async function save(ctx) {
   try {

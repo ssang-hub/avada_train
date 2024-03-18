@@ -4,8 +4,8 @@ const { data: todos } = require("./todos.json");
 /**
  * @param sort
  * @param limit
- * @returns {[ {id: number, name: string, price: number, color: string, createdAt: string, image: string},
- *  {id: number, name: string, price: number, color: string, createdAt: string, image: string},...]}
+ * @returns {[ {id: number, title: string, is_complete: boolean, createAt: string},
+ * {id: number, title: string, is_complete: boolean, createAt: string},...]}
  */
 function getAll({ sort = "asc", limit = 1000 }) {
   return todos
@@ -18,9 +18,9 @@ function getAll({ sort = "asc", limit = 1000 }) {
 }
 
 /**
- * @param sort
+ * @param id
  * @param query_params
- * @returns {id: number, name: string, price: number, color: string, createdAt: string, image: string}
+ * @returns {id: number, title: string, is_complete: boolean, createAt: string}
  */
 function getOne(id, query_params) {
   const result = {};
@@ -45,21 +45,20 @@ function writeJSONFile(result) {
 
 /**
  *
- * @param data
+ * @param title
+ * @return {id: number, title: string, is_complete: boolean, createAt: string}
  */
 function add(title) {
   const data = {
     id: todos.length > 0 ? todos[todos.length - 1].id + 1 : 1,
     title,
     is_completed: false,
-    is_deleted: false,
   };
 
   const date = new Date();
   data.createdAt = `${date.getDate()}-${
     date.getMonth() + 1
   }-${date.getFullYear()}`;
-  console.log(data);
   const result = [...todos, data];
   writeJSONFile(result);
   return data;
@@ -81,9 +80,6 @@ function destroy(items) {
  */
 
 function update({items, is_completed}) {
-  console.log(
-      items, is_completed
-  )
   const result = todos.map((todo) => {
     if (items.includes(todo.id)) {
       return { ...todo, is_completed };

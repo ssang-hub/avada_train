@@ -1,3 +1,9 @@
+/**
+ *
+ * @param {todoData, completedTodo, removeTodo}
+ * @returns {JSX.Element}
+ */
+
 function TodoItem({ todoData, completedTodo, removeTodo }) {
   return (
     <tr>

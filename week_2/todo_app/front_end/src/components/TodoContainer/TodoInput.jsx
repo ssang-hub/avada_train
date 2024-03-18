@@ -1,5 +1,11 @@
 import { useState } from "react";
 
+/**
+ *
+ * @param {addTodo}
+ * @returns {JSX.Element}
+ */
+
 const TodoInput = ({ addTodo }) => {
   const [todoTitle, setTodoTitle] = useState();
 

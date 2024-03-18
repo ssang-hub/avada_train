@@ -3,28 +3,41 @@ import TodoList from "./TodoList";
 import { FetchData } from "../../api/fetchData";
 import useFetchAPI from "../../hooks/useFetchAPI";
 
+/**
+ *
+ * @returns {JSX.Element}
+ */
+
 function TodoContainer() {
-  const {data, setData, isLoading} = useFetchAPI(`/todos`)
+  const { data, setData, isLoading } = useFetchAPI(`/todos`);
   const addTodo = async (todoTitle) => {
     try {
       const new_todo = {
         title: todoTitle,
       };
-      const res = await FetchData({method:"POST", url:"/todos", payload:new_todo});
+      const res = await FetchData({
+        method: "POST",
+        url: "/todos",
+        payload: new_todo,
+      });
       setData([...data, res.data]);
     } catch (error) {}
   };
 
   const completedTodo = async (id) => {
     try {
-      await FetchData({method:"PUT", url:`/todos/${id}`, payload:{is_completed: true}});
+      await FetchData({
+        method: "PUT",
+        url: `/todos/${id}`,
+        payload: { is_completed: true },
+      });
       setData(
-          data.map((item) => {
-            if (item.id === parseInt(id)) {
-              return { ...item, is_completed: true };
-            }
-            return item;
-          })
+        data.map((item) => {
+          if (item.id === parseInt(id)) {
+            return { ...item, is_completed: true };
+          }
+          return item;
+        })
       );
     } catch (error) {
       console.log(error);
@@ -33,7 +46,7 @@ function TodoContainer() {
 
   const removeTodo = async (id) => {
     try {
-      await FetchData({method:"DELETE", url:`/todos/${id}`});
+      await FetchData({ method: "DELETE", url: `/todos/${id}` });
       setData(data.filter((item) => item.id !== id));
     } catch (error) {
       console.log(error);
@@ -54,7 +67,11 @@ function TodoContainer() {
 
                 <TodoForm addTodo={addTodo} />
 
-                <TodoList todos={data} completedTodo={completedTodo} removeTodo={removeTodo} />
+                <TodoList
+                  todos={data}
+                  completedTodo={completedTodo}
+                  removeTodo={removeTodo}
+                />
               </div>
             </div>
           </div>

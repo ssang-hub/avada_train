@@ -1,12 +1,22 @@
 const fs = require("fs");
 const { data: todos } = require("./todos.json");
 
+function writeJSONFile(result) {
+  fs.writeFileSync(
+    "./src/database/todos.json",
+    JSON.stringify({
+      data: result,
+    })
+  );
+}
+
 /**
  * @param sort
  * @param limit
- * @returns {[ {id: number, name: string, price: number, color: string, createdAt: string, image: string},
- *  {id: number, name: string, price: number, color: string, createdAt: string, image: string},...]}
+ * @returns {[ {id: number, title: string, is_complete: boolean, createdAt: string},
+ *  {id: number, title: string, is_complete: boolean, createdAt: string},...]}
  */
+
 function getAll(sort = "asc", limit = 1000) {
   return todos
     .sort((a, b) => {
@@ -20,7 +30,7 @@ function getAll(sort = "asc", limit = 1000) {
 /**
  * @param sort
  * @param query_params
- * @returns {id: number, name: string, price: number, color: string, createdAt: string, image: string}
+ * @returns {id: number, title: string, is_complete: boolean, createdAt: string}
  */
 function getOne(id, query_params) {
   const result = {};
@@ -34,25 +44,16 @@ function getOne(id, query_params) {
   return result;
 }
 
-function writeJSONFile(result) {
-  fs.writeFileSync(
-    "./src/database/todos.json",
-    JSON.stringify({
-      data: result,
-    })
-  );
-}
-
 /**
  *
- * @param data
+ * @param title
+ * @returns {id: number, title: string, is_complete: boolean, createdAt: string}
  */
 function add(title) {
   const data = {
     id: todos[todos.length - 1].id + 1,
     title,
     is_completed: false,
-    is_deleted: false,
   };
 
   const date = new Date();

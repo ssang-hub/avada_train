@@ -1,7 +1,11 @@
 import TodoItem from "../TodoItem/TodoItem";
+
+/**
+ *
+ * @param {todos, completedTodo, removeTodo} param0
+ * @returns {JSX.Element}
+ */
 function TodoList({ todos, completedTodo, removeTodo }) {
-
-
   return (
     <table className="table mb-4" style={{ backgroundColor: "#322f2fa6" }}>
       <thead>
