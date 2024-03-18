@@ -1,0 +1,26 @@
+<div
+  class="card, m-3, product_card"
+  style="width: 250px; border: 1px gray solid"
+  )}
+>
+  <div class="d-flex justify-content-center">
+    <img style="width: 175px; height: 250px;" src="<%=data.image%> alt="" />
+  </div>
+  <div class="card-body">
+    <h5 class="card-title text-danger"><%=data.name%></h5>
+    <p class="card-text product-detail">
+      Some quick example text to build on the card title and make up the bulk of
+      the card's content.
+    </p>
+
+    <h6 class="text-muted">
+      <i class="fa-solid fa-tag"></i> <%=data.product%>
+    </h6>
+    <a href="/api/products/<%=data.id%>" class="btn btn-outline-success"
+      >Mua Ngay</a
+    >
+    <h5 className="text-danger d-flex ml-3 ">
+      <%=data.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')%>đ
+    </h5>
+  </div>
+</div>
