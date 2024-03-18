@@ -3,16 +3,6 @@
 import {useEffect, useState} from "react";
 import {FetchData} from "../api/fetchData";
 
-
-/**
- * useFetchAPI hook for fetch data from api
- *
- * @param url
- * @param method
- * @param postData
- *
- * @return {data: [], setData([]), isLoading:true|false}
- * */
 const useFetchAPI = (url, method='GET', postData={})=>{
     const [data, setData] = useState([])
     const [isLoading, setIsLoading] = useState(false)
@@ -24,9 +14,9 @@ const useFetchAPI = (url, method='GET', postData={})=>{
                 setData(response.data)
             }
             catch (error){
-                throw error
+                console.log(error)
             }
-            finally {
+                finally {
                 setIsLoading(false)
             }
         }
