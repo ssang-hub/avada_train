@@ -2,7 +2,7 @@ const _ = require('lodash')
 const {getDateNow} = require('../helpers/helpers')
 const {firestore} = require('firebase-admin')
 
-const { db} = require('../services/TodosService')
+const { db} = require('../config/TodosService')
 const {Timestamp} = require('firebase-admin/firestore')
 
 const Todo = db.collection('todo')
@@ -14,7 +14,7 @@ const Todo = db.collection('todo')
  */
 async function getAll({ sort = "asc", limit = 1000 }) {
   try {
-    const res = await Todo.orderBy('createdAt', sort==="asc"?"asc":"desc").limit(10).get()
+    const res = await Todo.orderBy('createdAt', sort==="asc"?"asc":"desc").limit(parseInt(limit)).get()
     return res.docs.map(item=> {
       return {id: item.id, ...item.data()}
     })

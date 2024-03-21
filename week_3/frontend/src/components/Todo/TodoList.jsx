@@ -1,5 +1,5 @@
-import {Card, ResourceList} from "@shopify/polaris";
-import {useState} from "react";
+import { Card, ResourceList } from "@shopify/polaris";
+import { useState } from "react";
 import TodoItem from "./TodoItem";
 
 /**
