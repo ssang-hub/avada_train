@@ -2,7 +2,7 @@ const _ = require('lodash')
 const {getDateNow} = require('../helpers/helpers')
 const {firestore} = require('firebase-admin')
 
-const { db} = require('../config/TodosService')
+const { db} = require('../config/Database')
 const {Timestamp} = require('firebase-admin/firestore')
 
 const Todo = db.collection('todo')

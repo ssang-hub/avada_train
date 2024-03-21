@@ -18,7 +18,7 @@ function CreateTodoModal({
   const handleChangeInput = useCallback((newValue) => setValue(newValue), []);
 
   const handleCreateTodo = async () => {
-    value === "" ? setToastActive(true) : createTodo({ title: value }, "todos");
+    value.trim() === "" ? setToastActive(true) : createTodo({ title: value.trim() }, "todos");
     setValue("");
     handleActiveModal(false);
   };
