@@ -14,7 +14,7 @@ const {
 async function getTodos(ctx) {
   try {
     const query = ctx.query;
-    const todos = getAlltodos({sort:query.sort, limit:query.limit});
+    const todos = getAlltodos({ sort: query.sort, limit: query.limit });
     return (ctx.body = {
       data: todos,
     });
@@ -31,14 +31,14 @@ async function getTodos(ctx) {
 /**
  *
  * @param ctx
- * @returns {Promise<{data: @returns {id: number, title: string, is_complete: boolean, createdAt: string}}|{success: boolean, error: *}|{message: string, status: string}>}
+ * @returns {Promise<{data: @returns {id: number, title: string, isCompleted: boolean, createdAt: string}}|{success: boolean, error: *}|{message: string, status: string}>}
  */
 async function getTodoById(ctx) {
   try {
     const { id } = ctx.params;
     const query = ctx.query;
-    query_params = query.fields ? query.fields.split(",") : undefined;
-    const getCurrenttodo = getOnetodo(id, query_params);
+    const fields = query.fields ? query.fields.split(",") : undefined;
+    const getCurrenttodo = getOnetodo(id, fields);
 
     if (getCurrenttodo) {
       return (ctx.body = {
@@ -59,7 +59,7 @@ async function getTodoById(ctx) {
 /**
  *
  * @param ctx
- * @returns {Promise<{data: @returns {id: number, title: string, is_complete: boolean, createdAt: string}}|{success: boolean, error: *}|{message: string, status: string}>}
+ * @returns {Promise<{data: @returns {id: number, title: string, isCompleted: boolean, createdAt: string}}|{success: boolean, error: *}|{message: string, status: string}>}
  */
 async function save(ctx) {
   try {
@@ -108,7 +108,7 @@ async function updateTodo(ctx) {
 
 async function deleteTodoById(ctx) {
   try {
-    const {id} = ctx.params
+    const { id } = ctx.params;
     destroyTodo([parseInt(id)]);
     ctx.status = 200;
     return (ctx.body = { success: true });
@@ -120,14 +120,13 @@ async function deleteTodoById(ctx) {
   }
 }
 
-
 /**
  *
  * @param ctx
  * @returns {Promise<{success: boolean, error: *}|{success: boolean}>}
  */
 
-function deleteMultipleTodos(ctx){
+function deleteMultipleTodos(ctx) {
   try {
     destroyTodo(ctx.request.body);
     ctx.status = 200;

@@ -1,11 +1,22 @@
-const fs = require("fs");
 const { data: todos } = require("./todos.json");
+const _ = require("lodash");
+const { getDateNow } = require("../helpers/helpers");
+const fs = require("fs");
+
+const writeJSONFile = (result) => {
+  fs.writeFileSync(
+    "./src/database/todos.json",
+    JSON.stringify({
+      data: result,
+    })
+  );
+};
 
 /**
  * @param sort
  * @param limit
- * @returns {[ {id: number, title: string, is_complete: boolean, createAt: string},
- * {id: number, title: string, is_complete: boolean, createAt: string},...]}
+ * @returns {[ {id: number, title: string, isCompleted: boolean, createAt: string},
+ * {id: number, title: string, isCompleted: boolean, createAt: string},...]}
  */
 function getAll({ sort = "asc", limit = 1000 }) {
   return todos
@@ -19,46 +30,27 @@ function getAll({ sort = "asc", limit = 1000 }) {
 
 /**
  * @param id
- * @param query_params
- * @returns {id: number, title: string, is_complete: boolean, createAt: string}
+ * @param fields
+ * @returns {id: number, title: string, isCompleted: boolean, createAt: string}
  */
-function getOne(id, query_params) {
-  const result = {};
+function getOne(id, fields) {
   const todo = todos.find((todo) => todo.id === parseInt(id));
-
-  if (!query_params) return todo;
-
-  for (const [key, value] of Object.entries(todo)) {
-    if (query_params.includes(key)) result[key] = value;
-  }
-  return result;
-}
-
-function writeJSONFile(result) {
-  fs.writeFileSync(
-    "./src/database/todos.json",
-    JSON.stringify({
-      data: result,
-    })
-  );
+  if (!fields) return todo;
+  return _.pick(todo, fields);
 }
 
 /**
  *
  * @param title
- * @return {id: number, title: string, is_complete: boolean, createAt: string}
+ * @return {id: number, title: string, isCompleted: boolean, createAt: string}
  */
 function add(title) {
   const data = {
     id: todos.length > 0 ? todos[todos.length - 1].id + 1 : 1,
     title,
-    is_completed: false,
+    isCompleted: false,
   };
-
-  const date = new Date();
-  data.createdAt = `${date.getDate()}-${
-    date.getMonth() + 1
-  }-${date.getFullYear()}`;
+  data.createdAt = getDateNow();
   const result = [...todos, data];
   writeJSONFile(result);
   return data;
@@ -76,13 +68,13 @@ function destroy(items) {
 /**
  *
  * @param items
- * @param is_complete
+ * @param fileds - Object field update
  */
 
-function update({items, is_completed}) {
+function update({ items, fields }) {
   const result = todos.map((todo) => {
     if (items.includes(todo.id)) {
-      return { ...todo, is_completed };
+      return { ...todo, ...fields };
     }
     return todo;
   });

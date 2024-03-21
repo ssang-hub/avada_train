@@ -1,6 +1,6 @@
 import axios from "./axios";
 
-const FetchData = async ({method="GET", payload = {}, url}) => {
+const FetchData = async ({ method = "GET", payload = {}, url }) => {
   try {
     const { data } = await axios.request({
       method,

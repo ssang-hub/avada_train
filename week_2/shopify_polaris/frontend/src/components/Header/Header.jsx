@@ -1,4 +1,4 @@
-import { ActionList, Frame, Icon, Text, TopBar } from "@shopify/polaris";
+import { ActionList, Icon, InlineStack, Text, TopBar } from "@shopify/polaris";
 import {
   ArrowLeftIcon,
   NotificationIcon,
@@ -36,14 +36,6 @@ function Header() {
     console.log("toggle navigation visibility");
   }, []);
 
-  const logo = {
-    topBarSource:
-      "https://cdn.shopify.com/s/files/1/2376/3301/files/Shopify_Secondary_Inverted.png",
-    width: 86,
-    url: "#",
-    accessibilityLabel: "Shopify",
-  };
-
   const userMenuMarkup = (
     <TopBar.UserMenu
       actions={[
@@ -80,41 +72,39 @@ function Header() {
   );
 
   const secondaryMenuMarkup = (
-    <>
-      <div style={{ display: "flex" }}>
-        <TopBar.Menu
-          activatorContent={
-            <span>
-              <Icon source={SmileyNeutralIcon} />
-              <Text as="span" visuallyHidden>
-                Secondary menu
-              </Text>
-            </span>
-          }
-        />
-        <TopBar.Menu
-          activatorContent={
-            <span>
-              <Icon source={NotificationIcon} />
-              <Text as="span" visuallyHidden>
-                Secondary menu
-              </Text>
-            </span>
-          }
-          open={isSecondaryMenuOpen}
-          onOpen={toggleIsSecondaryMenuOpen}
-          onClose={toggleIsSecondaryMenuOpen}
-          actions={[
-            {
-              items: [{ content: "Community forums" }],
-            },
-          ]}
-        />
-      </div>
-    </>
+    <InlineStack wrap={false}>
+      <TopBar.Menu
+        activatorContent={
+          <span>
+            <Icon source={SmileyNeutralIcon} />
+            <Text as="span" visuallyHidden>
+              Secondary menu
+            </Text>
+          </span>
+        }
+      />
+      <TopBar.Menu
+        activatorContent={
+          <span>
+            <Icon source={NotificationIcon} />
+            <Text as="span" visuallyHidden>
+              Secondary menu
+            </Text>
+          </span>
+        }
+        open={isSecondaryMenuOpen}
+        onOpen={toggleIsSecondaryMenuOpen}
+        onClose={toggleIsSecondaryMenuOpen}
+        actions={[
+          {
+            items: [{ content: "Community forums" }],
+          },
+        ]}
+      />
+    </InlineStack>
   );
 
-  const topBarMarkup = (
+  return (
     <TopBar
       showNavigationToggle
       userMenu={userMenuMarkup}
@@ -126,11 +116,6 @@ function Header() {
       onNavigationToggle={handleNavigationToggle}
     />
   );
-
-  return (
-    <div style={{ height: "100px" }}>
-      <Frame topBar={topBarMarkup} logo={logo} />
-    </div>
-  );
 }
+
 export default Header;
